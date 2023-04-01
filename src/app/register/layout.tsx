@@ -1,10 +1,9 @@
 "use client";
 
 import { useAuth } from "@/hooks/auth";
-import { checkLogin } from "@/utils/authFunctions";
 
 export default function RegisterLayout({ children }: { children: React.ReactNode }) {
-  const auth = useAuth();
-  if (!checkLogin(auth)) return null;
+  const auth = useAuth({ redirect: true, path: "/", auth: true });
+  if (auth.isLoading || auth.isLoggedIn) return null;
   return <>{children}</>;
 }
