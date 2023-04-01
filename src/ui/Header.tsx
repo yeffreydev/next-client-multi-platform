@@ -1,8 +1,18 @@
 "use client";
 import { useAuth } from "@/hooks/auth";
 import Link from "next/link";
-import { ReactNode, useState } from "react";
+import { LegacyRef, MutableRefObject, ReactNode, useRef, useState } from "react";
 import { IoApps } from "react-icons/io5";
+
+//==========data
+const appListData: AppItemProps[] = [
+  { name: "Home", path: "/" },
+  { name: "Paint", path: "/paint" },
+  { name: "Paint", path: "/paint" },
+  { name: "Paint", path: "/paint" },
+  { name: "Paint", path: "/paint" },
+  { name: "Paint", path: "/paint" },
+];
 
 //==========props
 interface HeaderProps {
@@ -14,12 +24,17 @@ interface AppItemProps {
   name: string;
 }
 
+interface AuthButtonsProps {
+  handleApps: () => void;
+  appsButtonRef: LegacyRef<HTMLButtonElement> | undefined;
+}
+
 //===========components
 
-const AuthButtons = ({ handleApps }: { handleApps: () => void }) => {
+const AuthButtons = ({ handleApps, appsButtonRef }: AuthButtonsProps) => {
   return (
     <div className="flex gap-3">
-      <button onClick={handleApps}>
+      <button ref={appsButtonRef} onClick={handleApps}>
         <IoApps className="text-white w-[35px] h-[35px]" />
       </button>
       <Link href={"/account"} className="">
@@ -34,39 +49,46 @@ const LoginLink = () => {
 
 export const AppItem = ({ name, path }: AppItemProps) => {
   return (
-    <Link className="px-2 m-0 py-1 bg-black rounded-lg" href={path}>
+    <Link className="px-2 m-0 py-1 bg-gray-800 rounded-lg" href={path}>
       {name}
     </Link>
   );
 };
 
-const AppList = () => {
+const AppList = ({ listRef }: { listRef: MutableRefObject<HTMLDivElement | null> }) => {
   return (
-    <div className="absolute p-2 gap-2 flex justify-center content-start items-center flex-wrap w-[200px] h-[300px] bg-red-300 top-[60px] right-0">
-      <AppItem name="Home" path="/" />
-      <AppItem name="Paint" path="/paint" />
-      <AppItem name="Paint" path="/paint" />
-      <AppItem name="Paint" path="/paint" />
-      <AppItem name="Paint" path="/paint" />
-      <AppItem name="Paint" path="/paint" />
-      <AppItem name="Paint" path="/paint" />
-      <AppItem name="Paint" path="/paint" />
+    <div ref={listRef} className="absolute p-2 gap-2 flex justify-center content-start items-center flex-wrap w-[200px] h-[300px] bg-black top-[60px] right-0">
+      {appListData.map((item, index) => (
+        <AppItem key={index} name={item.name} path={item.path} />
+      ))}
     </div>
   );
 };
+
+// ======== Main Header component
 export default function Header({ children }: HeaderProps) {
   const { isLoggedIn } = useAuth({ redirect: false });
   const [viewApps, setViewApps] = useState(false);
+  const appListRef = useRef<HTMLDivElement | null>(null);
+  const appsButtonRef = useRef<HTMLButtonElement | null>(null);
   const handleViewApps = () => {
     setViewApps(!viewApps);
   };
+  const handleClickOutsideAppList = (e: MouseEvent) => {
+    if (appListRef) {
+      const appListContainEvent = appListRef.current?.contains(e.target as Node);
+      const appsButtonContainEvent = appsButtonRef.current?.contains(e.target as Node);
+      !appsButtonContainEvent && !appListContainEvent && setViewApps(false);
+    }
+  };
+  viewApps && document.addEventListener("mousedown", handleClickOutsideAppList);
   return (
     <header className="flex relative justify-between items-center h-[60px] mx-auto md:w-10/12 lg:w-9/12">
       <div>{children}</div>
       <nav>
-        <ul>{!isLoggedIn ? <LoginLink /> : <AuthButtons handleApps={handleViewApps} />}</ul>
+        <ul>{!isLoggedIn ? <LoginLink /> : <AuthButtons appsButtonRef={appsButtonRef} handleApps={handleViewApps} />}</ul>
       </nav>
-      {viewApps && <AppList />}
+      {viewApps && <AppList listRef={appListRef} />}
     </header>
   );
 }
