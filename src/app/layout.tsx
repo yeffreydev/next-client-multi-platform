@@ -1,5 +1,5 @@
-import Link from "next/link";
 import "./globals.css";
+import AppState from "@/context/AppState";
 
 export const metadata = {
   title: "Create Next App",
@@ -9,7 +9,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AppState>{children}</AppState>
+      </body>
     </html>
   );
 }

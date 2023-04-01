@@ -1,7 +1,10 @@
-export const metadata = {
-  title: "Register Next App",
-  description: "register for start a game",
-};
-export default function registerLayout({ children }: { children: React.ReactNode }) {
+"use client";
+
+import { useAuth } from "@/hooks/auth";
+import { checkLogin } from "@/utils/authFunctions";
+
+export default function RegisterLayout({ children }: { children: React.ReactNode }) {
+  const auth = useAuth();
+  if (!checkLogin(auth)) return null;
   return <>{children}</>;
 }

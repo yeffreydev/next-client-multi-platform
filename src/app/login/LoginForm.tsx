@@ -14,7 +14,7 @@ export default function LoginForm() {
     e.preventDefault();
     const { status, data } = await loginUser(form);
     if (status === 200) {
-      saveUserAuth(data);
+      saveUserAuth(data.user);
       return (window.location.href = "/");
     }
     alert("bad request");

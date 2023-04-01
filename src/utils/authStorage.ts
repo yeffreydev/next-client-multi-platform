@@ -1,9 +1,9 @@
 import { IUserAuth } from "@/types/user";
 
-const authKeyForSave = "user";
+const authKeyForSave = "auth";
 
-export const saveUserAuth = (value: string) => {
-  localStorage.setItem(authKeyForSave, value);
+export const saveUserAuth = (userAuth: IUserAuth) => {
+  localStorage.setItem(authKeyForSave, JSON.stringify(userAuth));
 };
 export const deleteUserAuth = () => {
   localStorage.removeItem(authKeyForSave);

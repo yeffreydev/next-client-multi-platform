@@ -1,8 +1,10 @@
-export const metadata = {
-  title: "login Next App",
-  description: "login for start a game",
-};
+"use client";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+import { useAuth } from "@/hooks/auth";
+import { checkLogin } from "@/utils/authFunctions";
+
+export default function LoginLayout({ children }: { children: React.ReactNode }) {
+  const auth = useAuth();
+  if (!checkLogin(auth)) return null;
   return <>{children}</>;
 }
