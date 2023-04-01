@@ -1,13 +1,14 @@
-import { IAuthUser } from "@/types/user";
+import { IUserAuth } from "@/types/user";
 
 const authKeyForSave = "user";
-export const saveAuthUser = (value: string) => {
+
+export const saveUserAuth = (value: string) => {
   localStorage.setItem(authKeyForSave, value);
 };
-export const deleteAuthUser = () => {
+export const deleteUserAuth = () => {
   localStorage.removeItem(authKeyForSave);
 };
-export const getAuthUser = (): IAuthUser | undefined => {
+export const getUserAuth = (): IUserAuth | null => {
   let user = localStorage.getItem(authKeyForSave);
-  return user ? (JSON.parse(user) as IAuthUser) : undefined;
+  return user ? (JSON.parse(user) as IUserAuth) : null;
 };

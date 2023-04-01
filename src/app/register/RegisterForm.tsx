@@ -1,7 +1,7 @@
 "use client";
 import { registerUser } from "@/api/user";
 import { IRegisterUser } from "@/types/user";
-import { saveAuthUser } from "@/utils/authStorage";
+import { saveUserAuth } from "@/utils/authStorage";
 import Link from "next/link";
 import React from "react";
 
@@ -23,7 +23,7 @@ export default function RegisterForm() {
     e.preventDefault();
     const { status, data } = await registerUser(registerForm);
     if (status == 200) {
-      saveAuthUser(data);
+      saveUserAuth(data);
       return (window.location.href = "/");
     } else {
       alert("bad request");

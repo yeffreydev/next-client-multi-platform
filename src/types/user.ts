@@ -1,5 +1,6 @@
-export interface IAuthUser {
+export interface IUserAuth {
   token: string;
+  loading: boolean;
   auth: boolean;
 }
 export interface ILoginUser {

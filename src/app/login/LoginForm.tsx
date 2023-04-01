@@ -1,7 +1,7 @@
 "use client";
 import { loginUser } from "@/api/user";
 import { ILoginUser } from "@/types/user";
-import { saveAuthUser } from "@/utils/authStorage";
+import { saveUserAuth } from "@/utils/authStorage";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -14,7 +14,7 @@ export default function LoginForm() {
     e.preventDefault();
     const { status, data } = await loginUser(form);
     if (status === 200) {
-      saveAuthUser(data);
+      saveUserAuth(data);
       return (window.location.href = "/");
     }
     alert("bad request");
