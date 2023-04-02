@@ -7,7 +7,7 @@ export const metadata = {
 
 const TopContent = () => {
   return (
-    <div className="flex justify-between bg-gray-900 p-3 rounded-lg">
+    <div className="flex justify-between bg-gray-700 mt-4 p-3 rounded-lg">
       <p>you can create anything</p>
       <Link href="/paint/new" className="bg-black px-3 py-1 rounded-lg">
         Start Paint
@@ -59,7 +59,7 @@ const ExploreSection = () => {
 
 const PaintsList = () => {
   return (
-    <div className="flex w-full p-1 gap-2">
+    <div className="flex w-full mt-3 p-1 gap-2">
       <ExploreSection />
       <div className="flex flex-1 flex-col bg-gray-900 mt-1 p-2 gap-2">
         <PaintItem />
@@ -72,9 +72,10 @@ const PaintsList = () => {
   );
 };
 
+//========== main paint page
 export default function PaintPage() {
   return (
-    <div>
+    <div className="w-full px-2 md:w-10/12 lg:w-9/12 mx-auto">
       <TopContent />
       <PaintsList />
     </div>
