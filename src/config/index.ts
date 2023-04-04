@@ -1,5 +1,5 @@
 const config = {
-  host: "http://localhost:4000",
+  host: "https://social-server.fly.dev",
 };
 
 export default config;
