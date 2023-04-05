@@ -1,5 +1,5 @@
 const config = {
-  host: "https://social-server.fly.dev",
+  host: process.env.NEXT_PUBLIC_SERVER_HOST,
 };
 
 export default config;
