@@ -136,6 +136,25 @@ const Paint: React.FC<PaintProps> = ({ width, height }) => {
     setPngFile(file);
   };
 
+  //disable scroll screen in canvas draw
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+
+    // add event manager to canvas
+    canvas?.addEventListener(
+      "touchmove",
+      function (event) {
+        // prevent default scroll screen
+        event.preventDefault();
+
+        // now draw in canvas during scroll
+        return false;
+      },
+      { passive: false }
+    );
+  }, []);
+
   return (
     <div>
       <canvas
