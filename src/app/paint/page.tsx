@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PaintList from "./PaintsList";
 
 export const metadata = {
   title: "paint Next App",
@@ -57,27 +58,15 @@ const ExploreSection = () => {
   );
 };
 
-const PaintsList = () => {
-  return (
-    <div className="flex w-full mt-3 p-1 gap-2">
-      <ExploreSection />
-      <div className="flex flex-1 flex-col bg-gray-900 mt-1 p-2 gap-2">
-        <PaintItem />
-        <PaintItem />
-        <PaintItem />
-        <PaintItem />
-        <PaintItem />
-      </div>
-    </div>
-  );
-};
-
 //========== main paint page
 export default function PaintPage() {
   return (
     <div className="w-full px-2 md:w-10/12 lg:w-9/12 mx-auto">
       <TopContent />
-      <PaintsList />
+      <div className="flex w-full mt-3 p-1 gap-2">
+        <ExploreSection />
+        <PaintList />
+      </div>
     </div>
   );
 }
