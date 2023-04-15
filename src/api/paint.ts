@@ -26,3 +26,15 @@ export const getPaintById = async (token: string, id: string) => {
   const res = await fetch(`${paintApi}/${id}`, { headers: { Authorization: `Bearer ${token}` } });
   return { status: res.status, data: await res.json() };
 };
+
+//save paint
+
+export const savePaint = async (token: string, image: File) => {
+  const formData = new FormData();
+  formData.append("imageFile", image);
+  const res = await fetch(`${paintApi}/save`, { method: "POST", headers: { Authorization: `Bearer ${token}` }, body: formData });
+  return {
+    status: res.status,
+    data: await res.json(),
+  };
+};

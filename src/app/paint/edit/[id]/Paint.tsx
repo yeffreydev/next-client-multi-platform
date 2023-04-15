@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { PaintContext } from "./PaintContext";
 import config from "@/config";
 import { IPaint } from "@/types/paint";
-import { getPaintById } from "@/api/paint";
+import { getPaintById, savePaint } from "@/api/paint";
 import AppContext from "@/context/AppContext";
 
 interface PaintProps {
@@ -122,6 +122,19 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
     };
   };
 
+  const saveCurrentPaint = () => {
+    console.log("clicked in save");
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return;
+    }
+    canvas.toBlob(async (blob) => {
+      const imgFile = new File([blob!], paintData?.imageName!, { type: "image/png" });
+      const { status } = await savePaint(userAuth.token!, imgFile);
+      console.log(status);
+    });
+  };
+
   //get paint
   useEffect(() => {
     (async () => {
@@ -191,7 +204,7 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
         <input onChange={handleColorChange} type="color" name="color" id="color" />
       </div>
       <div>
-        <button>save file</button>
+        <button onClick={saveCurrentPaint}>save paint </button>
       </div>
       <div>creat new file</div>
     </div>
