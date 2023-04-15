@@ -1,9 +1,10 @@
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import Paint from "./Paint";
 
-export default function EditPage() {
+export default async function EditPage({ params }: { params: Params }) {
   return (
     <div>
-      <Paint width={500} height={500} />
+      <Paint paintId={params.id} />
     </div>
   );
 }

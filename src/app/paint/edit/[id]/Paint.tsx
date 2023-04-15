@@ -1,18 +1,22 @@
 "use client";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { PaintContext } from "./PaintContext";
+import config from "@/config";
+import { IPaint } from "@/types/paint";
+import { getPaintById } from "@/api/paint";
+import AppContext from "@/context/AppContext";
 
 interface PaintProps {
-  width: number;
-  height: number;
+  paintId: string;
 }
 
-const Paint: React.FC<PaintProps> = ({ width, height }) => {
+const Paint: React.FC<PaintProps> = ({ paintId }) => {
+  const { userAuth } = useContext(AppContext);
   const [color, setColor] = useState("black");
+  const [paintData, setPaintData] = useState<IPaint | null>(null);
   const [painting, setPainting] = useState(false);
-
+  const [image, setImage] = useState({ width: 0, height: 0 });
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [pngFile, setPngFile] = useState<File | null>(null);
   const { paintSocket } = useContext(PaintContext);
   //function for start painting in canvas
   function startPainting(event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) {
@@ -68,20 +72,6 @@ const Paint: React.FC<PaintProps> = ({ width, height }) => {
     setColor(e.target.value);
   };
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) {
-      return;
-    }
-    const context = canvas?.getContext("2d");
-    if (!context) {
-      return;
-    }
-    context.fillStyle = "#fff";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    //eslint-disable-next-line
-  }, []);
-
   let canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     paintSocket?.on("draw", (data: any) => {
@@ -114,7 +104,7 @@ const Paint: React.FC<PaintProps> = ({ width, height }) => {
     link.click();
   };
 
-  const loadImg = () => {
+  const loadImg = (urlImage: string) => {
     //load img in canvas with pngFile
     const canvas = canvasRef.current;
     if (!canvas) {
@@ -124,23 +114,41 @@ const Paint: React.FC<PaintProps> = ({ width, height }) => {
     if (!context) {
       return;
     }
+    context.fillRect(0, 0, image.width, image.height);
     const img = new Image();
-    img.src = URL.createObjectURL(pngFile!);
+    img.src = urlImage;
     img.onload = () => {
       context.drawImage(img, 0, 0);
     };
   };
 
-  const handleChangePngFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files![0];
-    setPngFile(file);
-  };
+  //get paint
+  useEffect(() => {
+    (async () => {
+      const res = await getPaintById(userAuth.token!, paintId);
+      setPaintData(res.data);
+    })();
+    //eslint-disable-next-line
+  }, []);
 
+  ///get image
+  useEffect(() => {
+    paintData &&
+      fetch(`${config.host}${config.paintsFolder}/${paintData.imageName}`)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const img = new Image();
+          img.src = URL.createObjectURL(blob);
+          img.onload = function () {
+            setImage((prevState) => ({ ...prevState, width: img.naturalWidth, height: img.naturalHeight }));
+            loadImg(img.src);
+          };
+        });
+    //eslint-disable-next-line
+  }, [paintData]);
   //disable scroll screen in canvas draw
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-
     // add event manager to canvas
     canvas?.addEventListener(
       "touchmove",
@@ -153,7 +161,9 @@ const Paint: React.FC<PaintProps> = ({ width, height }) => {
       },
       { passive: false }
     );
-  }, []);
+  }, [paintData]);
+
+  if (!paintData) return null;
 
   return (
     <div>
@@ -166,8 +176,8 @@ const Paint: React.FC<PaintProps> = ({ width, height }) => {
         onTouchStart={startPainting}
         onTouchEnd={stopPainting}
         onTouchMove={paint}
-        width={width}
-        height={height}
+        width={image.width}
+        height={image.height}
       />
       <button
         onClick={() => {
@@ -176,10 +186,6 @@ const Paint: React.FC<PaintProps> = ({ width, height }) => {
       >
         Download
       </button>
-      <div className="upload img">
-        <input onChange={handleChangePngFile} type="file" accept="png" name="img" id="img" />
-        <button onClick={loadImg}>load img</button>
-      </div>
       <div>
         <label htmlFor="">select color</label>
         <input onChange={handleColorChange} type="color" name="color" id="color" />

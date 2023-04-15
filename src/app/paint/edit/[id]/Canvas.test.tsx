@@ -12,6 +12,22 @@ function Canvas(): JSX.Element {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   //functions
+  // const loadImg = (urlImage: string) => {
+  //   //load img in canvas with pngFile
+  //   const canvas = canvasRef.current;
+  //   if (!canvas) {
+  //     return;
+  //   }
+  //   const context = canvas.getContext("2d");
+  //   if (!context) {
+  //     return;
+  //   }
+  //   const img = new Image();
+  //   img.src = URL.createObjectURL(pngFile!);
+  //   img.onload = () => {
+  //     context.drawImage(img, 0, 0);
+  //   };
+  // };
   //function for start painting in canvas
   function startPainting(event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) {
     setPainting(true);

@@ -21,3 +21,8 @@ export const getPaintsByUser = async (token: string) => {
     data: await res.json(),
   };
 };
+
+export const getPaintById = async (token: string, id: string) => {
+  const res = await fetch(`${paintApi}/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+  return { status: res.status, data: await res.json() };
+};
