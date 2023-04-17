@@ -48,9 +48,9 @@ export default function NewPaintPage() {
         .then(async (blob) => {
           const file = new File([blob], "image.png", { type: "image/png" });
           console.log(file);
-          const { status } = await createNewPaint(state.name, file, userAuth.token);
+          const { status, data } = await createNewPaint(state.name, file, userAuth.token);
           if (status === 200) {
-            window.location.href = "/paint/edit";
+            window.location.href = "/paint/edit/" + data._id;
           }
         });
     }

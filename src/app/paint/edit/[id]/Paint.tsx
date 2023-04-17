@@ -12,12 +12,11 @@ interface PaintProps {
 
 const Paint: React.FC<PaintProps> = ({ paintId }) => {
   const { userAuth } = useContext(AppContext);
-  const [color, setColor] = useState("black");
   const [paintData, setPaintData] = useState<IPaint | null>(null);
   const [painting, setPainting] = useState(false);
   const [image, setImage] = useState({ width: 0, height: 0 });
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const { paintSocket } = useContext(PaintContext);
+  const { paintSocket, currentColor } = useContext(PaintContext);
   //function for start painting in canvas
   function startPainting(event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) {
     setPainting(true);
@@ -61,15 +60,11 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
     context.beginPath();
     context.moveTo(mousePosition.x, mousePosition.y);
     context.lineTo(x, y);
-    context.strokeStyle = color;
+    context.strokeStyle = currentColor;
     context.lineWidth = 2;
     context.stroke();
     setMousePosition({ x, y });
-    paintSocket?.emit("draw", { x, y, color, mousePosition });
-  };
-
-  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setColor(e.target.value);
+    paintSocket?.emit("draw", { x, y, currentColor, mousePosition });
   };
 
   let canvasRef = useRef<HTMLCanvasElement>(null);
@@ -199,10 +194,6 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
       >
         Download
       </button>
-      <div>
-        <label htmlFor="">select color</label>
-        <input onChange={handleColorChange} type="color" name="color" id="color" />
-      </div>
       <div>
         <button onClick={saveCurrentPaint}>save paint </button>
       </div>

@@ -1,14 +1,13 @@
 "use client";
 import { ReactNode } from "react";
 import PaintState from "./PaintContext";
+import ToolsBar from "./ToolsBar";
 export default function EditPaintLayout({ children }: { children: ReactNode }) {
   return (
     <div className="">
       <PaintState>
         {/* tools bar  */}
-        <div className="flex">
-          <button>width</button>
-        </div>
+        <ToolsBar />
         {children}
       </PaintState>
     </div>

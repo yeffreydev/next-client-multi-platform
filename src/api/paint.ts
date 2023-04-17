@@ -23,7 +23,7 @@ export const getPaintsByUser = async (token: string) => {
 };
 
 export const getPaintById = async (token: string, id: string) => {
-  const res = await fetch(`${paintApi}/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+  const res = await fetch(`${paintApi}/${id}`, { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" });
   return { status: res.status, data: await res.json() };
 };
 
