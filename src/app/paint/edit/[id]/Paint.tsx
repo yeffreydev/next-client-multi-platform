@@ -16,7 +16,7 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
   const [painting, setPainting] = useState(false);
   const [image, setImage] = useState({ width: 0, height: 0 });
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const { paintSocket, currentColor } = useContext(PaintContext);
+  const { paintSocket, currentColor, strokeWidth } = useContext(PaintContext);
   //function for start painting in canvas
   function startPainting(event: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) {
     setPainting(true);
@@ -61,7 +61,7 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
     context.moveTo(mousePosition.x, mousePosition.y);
     context.lineTo(x, y);
     context.strokeStyle = currentColor;
-    context.lineWidth = 2;
+    context.lineWidth = strokeWidth;
     context.stroke();
     setMousePosition({ x, y });
     paintSocket?.emit("draw", { x, y, currentColor, mousePosition });

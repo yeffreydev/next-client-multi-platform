@@ -4,14 +4,16 @@ import config from "@/config";
 //============types
 export enum PaintActionTypes {
   SET_COLOR = "SET_COLOR",
+  SET_STROKE_WIDTH = "SET_STROKE_WIDTH",
 }
 export interface IAction<T> {
   type: PaintActionTypes;
   payload: T;
 }
 export interface IPaintState {
-  dispatch: React.Dispatch<IAction<string | null>>;
+  dispatch: React.Dispatch<IAction<string | null | number>>;
   currentColor: string;
+  strokeWidth: number;
   paintSocket: Socket | null;
 }
 
@@ -23,11 +25,21 @@ export const setCurrentColor = (color: string, dispacth: Dispatch<IAction<string
   });
 };
 
+export const setCurrentStrokeWidth = (width: number, dispatch: Dispatch<IAction<number>>) => {
+  dispatch({
+    type: PaintActionTypes.SET_STROKE_WIDTH,
+    payload: width,
+  });
+};
+
 //============Reducer functions
-export const paintReducer = (state: IPaintState, action: IAction<string | null>): IPaintState => {
+export const paintReducer = (state: IPaintState, action: IAction<string | null | number>): IPaintState => {
   switch (action.type) {
     case PaintActionTypes.SET_COLOR: {
       return { ...state, currentColor: action.payload as string };
+    }
+    case PaintActionTypes.SET_STROKE_WIDTH: {
+      return { ...state, strokeWidth: action.payload as number };
     }
     default: {
       return { ...state };
@@ -39,6 +51,7 @@ export const paintReducer = (state: IPaintState, action: IAction<string | null>)
 export const initialState: IPaintState = {
   dispatch: () => null,
   currentColor: "#000",
+  strokeWidth: 1,
   paintSocket: null,
 };
 
