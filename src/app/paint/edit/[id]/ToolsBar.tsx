@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useContext } from "react";
 import { PaintContext, setCurrentColor, setCurrentStrokeWidth } from "./PaintContext";
+import { AiFillSetting } from "react-icons/ai";
 
 export default function ToolsBar() {
   const { dispatch, currentColor, strokeWidth } = useContext(PaintContext);
@@ -14,7 +15,7 @@ export default function ToolsBar() {
     setCurrentStrokeWidth(parseInt(value), dispatch);
   };
   return (
-    <div className="flex h-[50px] w-full items-center">
+    <div className="flex h-[50px] w-full items-center bg-gray-600">
       <div className="flex flex-1 gap-3">
         <div>
           <input onChange={handleChangeColor} value={currentColor} type="color" name="paint_color" id="paint_color" />
@@ -24,7 +25,9 @@ export default function ToolsBar() {
         </div>
       </div>
       <div>
-        <button>config</button>
+        <button>
+          <AiFillSetting size={30} />
+        </button>
       </div>
     </div>
   );

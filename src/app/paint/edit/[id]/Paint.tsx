@@ -5,7 +5,11 @@ import config from "@/config";
 import { IPaint } from "@/types/paint";
 import { getPaintById, savePaint } from "@/api/paint";
 import AppContext from "@/context/AppContext";
+import { FiDownload } from "react-icons/fi";
 import { IPaintingData } from "./types";
+import { IoIosSave } from "react-icons/io";
+import { FaPlus } from "react-icons/fa";
+import Link from "next/link";
 
 interface PaintProps {
   paintId: string;
@@ -177,7 +181,7 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
   return (
     <div>
       <canvas
-        className={""}
+        className={"m-2"}
         ref={canvasRef}
         onMouseDown={startPainting}
         onMouseUp={stopPainting}
@@ -188,17 +192,20 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
         width={image.width}
         height={image.height}
       />
-      <button
-        onClick={() => {
-          downloadImg();
-        }}
-      >
-        Download
-      </button>
-      <div>
-        <button onClick={saveCurrentPaint}>save paint </button>
+      <div className="flex ml-2 gap-3 py-3">
+        <button className="py-1 px-3 bg-gray-600 rounded-xl" onClick={downloadImg}>
+          <FiDownload />
+        </button>
+        <button className="py-1 px-3 bg-gray-600 rounded-xl flex gap-2 items-center" onClick={saveCurrentPaint}>
+          save <IoIosSave />
+        </button>
       </div>
-      <div>creat new file</div>
+      <div className="ml-2 flex items-center gap-2">
+        <span>Start New File</span>{" "}
+        <Link href={"/paint/new"}>
+          <FaPlus />
+        </Link>
+      </div>
     </div>
   );
 };

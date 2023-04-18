@@ -20,7 +20,7 @@ export default function PaintList() {
     //eslint-disable-next-line
   }, []);
   return (
-    <div className="flex flex-1 flex-col bg-gray-900 mt-1 p-2 gap-2">
+    <div className="flex relative w-full md:w-10/12 flex-col bg-gray-900 mt-1 p-2 gap-2">
       {paints.map((item, index) => {
         return <PaintItem paint={item} key={index} />;
       })}

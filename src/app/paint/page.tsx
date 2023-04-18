@@ -17,22 +17,6 @@ const TopContent = () => {
   );
 };
 
-const PaintItem = () => {
-  return (
-    <div className="flex  bg-gray-800 p-2 justify-between">
-      <div className="flex gap-2">
-        <p>pintando el paisaje</p>
-        <img width={30} height={30} />
-        <p>@username, @username1, @username3,...</p>
-      </div>
-
-      <Link className="bg-black text-white px-2 py-1 rounded-lg" href="/paint">
-        open
-      </Link>
-    </div>
-  );
-};
-
 const ExplorePaintItem = () => {
   return (
     <div className="flex cursor-pointer justify-between px-2">
@@ -61,9 +45,9 @@ const ExploreSection = () => {
 //========== main paint page
 export default function PaintPage() {
   return (
-    <div className="w-full px-2 md:w-10/12 lg:w-9/12 mx-auto">
+    <div className="w-full relative px-2 md:w-10/12 lg:w-9/12 mx-auto">
       <TopContent />
-      <div className="flex w-full mt-3 p-1 gap-2">
+      <div className="relative flex w-full  mt-3 p-1 gap-2">
         <ExploreSection />
         <PaintList />
       </div>
