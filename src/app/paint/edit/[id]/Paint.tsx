@@ -5,6 +5,7 @@ import config from "@/config";
 import { IPaint } from "@/types/paint";
 import { getPaintById, savePaint } from "@/api/paint";
 import AppContext from "@/context/AppContext";
+import { IPaintingData } from "./types";
 
 interface PaintProps {
   paintId: string;
@@ -64,12 +65,12 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
     context.lineWidth = strokeWidth;
     context.stroke();
     setMousePosition({ x, y });
-    paintSocket?.emit("draw", { x, y, currentColor, mousePosition });
+    paintSocket?.emit("draw", { x, y, color: currentColor, mousePosition, strokeWidth });
   };
 
   let canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
-    paintSocket?.on("draw", (data: any) => {
+    paintSocket?.on("draw", (data: IPaintingData) => {
       const canvas = canvasRef.current;
       if (!canvas) {
         return;
@@ -82,7 +83,7 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
       context.moveTo(data.mousePosition.x, data.mousePosition.y);
       context.lineTo(data.x, data.y);
       context.strokeStyle = data.color;
-      context.lineWidth = 2;
+      context.lineWidth = data.strokeWidth;
       context.stroke();
     });
   }, [paintSocket]);
