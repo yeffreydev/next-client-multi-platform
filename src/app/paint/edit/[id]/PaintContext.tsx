@@ -1,5 +1,5 @@
 import { Socket, io } from "socket.io-client";
-import React, { Dispatch } from "react";
+import React, { Dispatch, useState } from "react";
 import config from "@/config";
 //============types
 export enum PaintActionTypes {
@@ -59,18 +59,25 @@ export const initialState: IPaintState = {
 export const PaintContext = React.createContext(initialState);
 
 //============variables
-const paintSocket: Socket = io(config.host, { path: "/paint" });
+// const paintSocket: Socket = io(config.host, { path: "/paint" });
 //============state
-export default function PaintState({ children }: { children: React.ReactNode }) {
+export default function PaintState({ children, paintId }: { children: React.ReactNode; paintId: string }) {
+  const [paintSocket, setPaintSocket] = useState<Socket>(io(config.host, { path: "/paint" }));
   const [state, dispatch] = React.useReducer(paintReducer, initialState);
   React.useEffect(() => {
     paintSocket.on("connect", () => {
       console.log("connected to paint socket");
     });
-    paintSocket.on("disconnect", () => {
-      console.log("disconnected from paint socket");
-    });
-  }, []);
+    return () => {
+      paintSocket.disconnect();
+      console.log("disconnected paint socket");
+    };
+  }, [paintSocket]);
+
+  React.useEffect(() => {
+    paintSocket.emit("new-user", { paintId });
+    //eslint-disable-next-line
+  }, [paintId]);
 
   return <PaintContext.Provider value={{ ...state, paintSocket, dispatch }}>{children}</PaintContext.Provider>;
 }
