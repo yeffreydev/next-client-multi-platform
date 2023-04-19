@@ -6,7 +6,7 @@ import Image from "next/image";
 function PaintItem({ paint }: { paint: IPaint }) {
   return (
     <div className="flex gap-1 w-full relative  bg-gray-800 p-2 items-center">
-      <Image src={`${config.host}${config.paintsFolder}/${paint.imageName}`} width={30} height={30} alt={paint.name} />
+      <Image className="w-[30px] h-[30px]" src={`${config.host}${config.paintsFolder}/${paint.imageName}`} width={30} height={30} alt={paint.name} />
       <p className="font-bold max-w-[100px] overflow-auto scrollbar-hidden  whitespace-nowrap">{paint.name}jigj jfif jsidfji</p>
       <div className="flex-1 flex gap-2 overflow-auto scrollbar-hidden">
         <p className="text-sm italic">@username</p>

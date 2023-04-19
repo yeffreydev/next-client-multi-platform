@@ -27,7 +27,7 @@ const ExplorePaintItem = () => {
 };
 const ExploreSection = () => {
   return (
-    <div className="w-2/12 bg-gray-800 hidden md:block">
+    <div className="w-2/12 hidden md:block">
       <h1 className="font-bold text-teal-700 pl-2">explore more</h1>
       <div className=" flex flex-col gap-2">
         <ExplorePaintItem />
