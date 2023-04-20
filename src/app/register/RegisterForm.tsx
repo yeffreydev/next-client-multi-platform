@@ -21,13 +21,13 @@ export default function RegisterForm() {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!registerForm.terms) return alert("accept terms to continue");
     const { status, data } = await registerUser(registerForm);
-    if (status == 200) {
-      saveUserAuth(data);
-      return (window.location.href = "/");
-    } else {
-      alert("bad request");
+    if (status !== 200) {
+      return alert("Missing credentials");
     }
+    saveUserAuth(data.user);
+    window.location.href = "/";
   };
   return (
     <form onSubmit={handleSubmit} className={"flex mt-[50px] flex-col gap-14 mx-auto md:w-7/12 lg:w-5/12"}>

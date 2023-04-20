@@ -13,11 +13,11 @@ export default function LoginForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { status, data } = await loginUser(form);
-    if (status === 200) {
-      saveUserAuth(data.user);
-      return (window.location.href = "/");
+    if (status !== 200) {
+      return alert("Missing credentials");
     }
-    alert("bad request");
+    saveUserAuth(data.user);
+    window.location.href = "/";
   };
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
