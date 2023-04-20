@@ -130,7 +130,7 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
     }
     canvas.toBlob(async (blob) => {
       const imgFile = new File([blob!], paintData?.imageName!, { type: "image/png" });
-      const { status } = await savePaint(userAuth.token!, imgFile);
+      const { status } = await savePaint(userAuth.token!, imgFile, paintData?._id);
       console.log(status);
     });
   };
