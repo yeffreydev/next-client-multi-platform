@@ -6,5 +6,9 @@ export default function LogOut() {
     deleteUserAuth();
     window.location.href = "/login";
   };
-  return <button onClick={handleLogout}>LogOut</button>;
+  return (
+    <button className="text-red-200 hover:underline" onClick={handleLogout}>
+      LogOut
+    </button>
+  );
 }

@@ -5,6 +5,6 @@ export interface IPaint {
   name: string;
   users: string[];
   public: boolean; //default true - any user can view this paint
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

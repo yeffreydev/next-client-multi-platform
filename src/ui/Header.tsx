@@ -37,7 +37,7 @@ const AuthButtons = ({ handleApps, appsButtonRef }: AuthButtonsProps) => {
       <button ref={appsButtonRef} onClick={handleApps}>
         <IoApps className="text-white w-[35px] h-[35px]" />
       </button>
-      <Link href={"/account"} className="">
+      <Link href={"/username"} className="">
         <div className="bg-gray-300 w-[35px] rounded-full h-[35px]"></div>
       </Link>
     </div>
@@ -57,7 +57,7 @@ export const AppItem = ({ name, path }: AppItemProps) => {
 
 const AppList = ({ listRef }: { listRef: MutableRefObject<HTMLDivElement | null> }) => {
   return (
-    <div ref={listRef} className="absolute p-2 gap-2 flex justify-center content-start items-center flex-wrap w-[200px] h-[300px] bg-black top-[60px] right-0">
+    <div ref={listRef} className="absolute z-10 p-2 gap-2 flex justify-center content-start items-center flex-wrap w-[200px] h-[300px] bg-black top-[60px] right-0">
       {appListData.map((item, index) => (
         <AppItem key={index} name={item.name} path={item.path} />
       ))}
