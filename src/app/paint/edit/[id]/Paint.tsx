@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { ReactEventHandler, useContext, useEffect, useRef, useState } from "react";
 import { PaintContext } from "./PaintContext";
 import config from "@/config";
 import { IPaint } from "@/types/paint";
@@ -175,6 +175,16 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
       { passive: false }
     );
   }, [paintData]);
+
+  const removePaintingInOutCanvas = (e: MouseEvent | TouchEvent) => {
+    if (canvasRef) {
+      canvasRef.current?.contains(e.target as Node) ? null : stopPainting();
+    }
+  };
+  //set painting to false, when mousemove or touchmove  out of canvas
+
+  window.addEventListener("mouseup", removePaintingInOutCanvas);
+  window.addEventListener("touchend", removePaintingInOutCanvas);
 
   if (!paintData) return null;
 

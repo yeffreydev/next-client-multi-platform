@@ -61,7 +61,7 @@ export default function NewPaintPage() {
       <form className="flex items-center gap-2 p-2" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">name</label>
-          <input name="name" className="bg-gray-600 w-[50px]" value={state.name} onChange={handleChangeName} autoComplete="off" type="text" />
+          <input autoComplete="off" name="name" className="bg-gray-600 w-[50px]" value={state.name} onChange={handleChangeName} type="text" />
         </div>
         <div>
           <label htmlFor="">width: </label>
