@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactEventHandler, useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { PaintContext } from "./PaintContext";
 import config from "@/config";
 import { IPaint } from "@/types/paint";

@@ -9,5 +9,6 @@ export interface ILoginUser {
 }
 export interface IRegisterUser extends ILoginUser {
   email: string;
+  confirmPassword: string;
   terms: boolean;
 }
