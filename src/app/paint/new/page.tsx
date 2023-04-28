@@ -9,7 +9,7 @@ export default function NewPaintPage() {
     dangerAlert: "",
     name: "",
     view: {
-      width: 500,
+      width: 400,
       height: 400,
     },
   });
@@ -32,6 +32,11 @@ export default function NewPaintPage() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!state.name.trim()) return alert("name is required");
+    if (state.view.width < 50) return alert("el valor minimo es 50");
+    if (state.view.height < 50) return alert("el valor minimo es 50");
+    if (state.view.width > 1000) return alert("el valor debe ser menor o igual a 1000");
+    if (state.view.height > 1000) return alert("el valor debe ser menor o igual a 1000");
+    if (state.dangerAlert) return alert(state.dangerAlert);
     if (canvasRef.current) {
       const canvas = canvasRef.current;
       canvas.width = state.view.width;
@@ -42,12 +47,10 @@ export default function NewPaintPage() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
       const dataUrl = canvas.toDataURL("image/png");
-      console.log(dataUrl);
       fetch(dataUrl)
         .then((res) => res.blob())
         .then(async (blob) => {
           const file = new File([blob], "image.png", { type: "image/png" });
-          console.log(file);
           const { status, data } = await createNewPaint(state.name, file, userAuth.token);
           if (status === 200) {
             window.location.href = "/paint/edit/" + data._id;
