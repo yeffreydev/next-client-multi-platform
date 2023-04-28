@@ -2,7 +2,7 @@ import config from "@/config";
 import { IPaint } from "@/types/paint";
 import Link from "next/link";
 import Image from "next/image";
-
+import { appDataConfig } from "@/config/data";
 function PaintItem({ paint }: { paint: IPaint }) {
   return (
     <div className="flex gap-1 w-full relative  bg-gray-800 p-2 items-center">
@@ -16,7 +16,7 @@ function PaintItem({ paint }: { paint: IPaint }) {
         <p className="text-sm italic">@username</p>
       </div>
       <div className="mx-2">
-        <Link className="bg-black text-white px-2 py-1 rounded-lg" href={`/paint/edit/${paint._id}`}>
+        <Link className="bg-black text-white px-2 py-1 rounded-lg" href={`${appDataConfig.appsRoutes.paint}/edit/${paint._id}`}>
           open
         </Link>
       </div>

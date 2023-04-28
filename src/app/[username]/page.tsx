@@ -1,5 +1,6 @@
 import Link from "next/link";
-import PaintItem from "../paint/PaintItem";
+import PaintItem from "./../apps/paint/PaintItem";
+import { appDataConfig } from "@/config/data";
 
 export default function AccountPage() {
   return (
@@ -33,7 +34,7 @@ export default function AccountPage() {
       </div>
       <div className="flex w-11/12 mx-auto gap-3">
         <Link href={"/"}>Home</Link>
-        <Link href={"/paint"}>Paint App</Link>
+        <Link href={`${appDataConfig.appsRoutes.paint}`}>Paint App</Link>
       </div>
       <div className="flex flex-col gap-3 w-11/12 mx-auto">
         <h1>My Paints</h1>

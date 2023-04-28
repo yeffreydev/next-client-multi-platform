@@ -11,7 +11,7 @@ export default function PaintLayout({ children }: { children: React.ReactNode })
       <div className="bg-black">
         <Header>
           <div>
-            <Link href="/paint">Paint App</Link>
+            <Link href="/apps/paint">Paint App</Link>
           </div>
         </Header>
       </div>

@@ -3,15 +3,15 @@ import { useAuth } from "@/hooks/auth";
 import Link from "next/link";
 import { LegacyRef, MutableRefObject, ReactNode, useRef, useState } from "react";
 import { IoApps } from "react-icons/io5";
-
+import { appDataConfig } from "@/config/data";
 //==========data
 const appListData: AppItemProps[] = [
   { name: "Home", path: "/" },
-  { name: "Paint", path: "/paint" },
-  { name: "Paint", path: "/paint" },
-  { name: "Paint", path: "/paint" },
-  { name: "Paint", path: "/paint" },
-  { name: "Paint", path: "/paint" },
+  { name: "Paint", path: appDataConfig.appsRoutes.paint },
+  { name: "Paint", path: appDataConfig.appsRoutes.paint },
+  { name: "Paint", path: appDataConfig.appsRoutes.paint },
+  { name: "Paint", path: appDataConfig.appsRoutes.paint },
+  { name: "Paint", path: appDataConfig.appsRoutes.paint },
 ];
 
 //==========props

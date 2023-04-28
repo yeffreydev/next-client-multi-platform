@@ -1,5 +1,6 @@
 "use client";
 import { createNewPaint } from "@/api/paint";
+import { appDataConfig } from "@/config/data";
 import AppContext from "@/context/AppContext";
 import { ChangeEvent, FormEvent, useRef, useContext, useState } from "react";
 
@@ -53,7 +54,7 @@ export default function NewPaintPage() {
           const file = new File([blob], "image.png", { type: "image/png" });
           const { status, data } = await createNewPaint(state.name, file, userAuth.token);
           if (status === 200) {
-            window.location.href = "/paint/edit/" + data._id;
+            window.location.href = `${appDataConfig.appsRoutes.paint}/edit/${data._id}`;
           }
         });
     }

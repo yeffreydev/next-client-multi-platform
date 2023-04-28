@@ -10,6 +10,7 @@ import { IPaintingData } from "./types";
 import { IoIosSave } from "react-icons/io";
 import { FaPlus } from "react-icons/fa";
 import Link from "next/link";
+import { appDataConfig } from "@/config/data";
 
 interface PaintProps {
   paintId: string;
@@ -212,7 +213,7 @@ const Paint: React.FC<PaintProps> = ({ paintId }) => {
       </div>
       <div className="ml-2 flex items-center gap-2">
         <span>Start New File</span>{" "}
-        <Link href={"/paint/new"}>
+        <Link href={`${appDataConfig.appsRoutes.paint}/new`}>
           <FaPlus />
         </Link>
       </div>

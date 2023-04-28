@@ -1,5 +1,4 @@
 import { AppItem } from "@/ui/Header";
-import Link from "next/link";
 
 export default function Landing() {
   return (
@@ -10,9 +9,9 @@ export default function Landing() {
         maxime, ad tenetur commodi rem?
       </p>
       <div className="flex mt-5 gap-3 flex-wrap">
-        <AppItem name="Paint" path="/paint" />
-        <AppItem name="Paint" path="/paint" />
-        <AppItem name="Paint" path="/paint" />
+        <AppItem name="Paint" path="/apps/paint" />
+        <AppItem name="Paint" path="/apps/paint" />
+        <AppItem name="Paint" path="/apps/paint" />
       </div>
       <div className="flex mt-5">
         <div className="bg-[#343434] rounded-3xl items-center flex justify-end h-[60px] w-[300px]">
