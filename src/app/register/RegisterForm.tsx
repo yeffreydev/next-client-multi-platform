@@ -5,6 +5,8 @@ import { saveUserAuth } from "@/utils/authStorage";
 import Link from "next/link";
 import React, { useState } from "react";
 import { validateFields } from "./helpers";
+import { AiFillFacebook } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
 
 interface FormGroupProps {
   id: string;
@@ -18,14 +20,9 @@ interface FormGroupProps {
 
 export const FormGroup: React.FC<FormGroupProps> = ({ id, type, label, name, value, error, handleChange }) => {
   return (
-    <fieldset className={"flex gap-2 flex-col w-11/12 mx-auto"}>
-      <div className="flex gap-2">
-        <label className="w-[150px] text-sm" htmlFor={id}>
-          {label}
-        </label>
-        <input id={id} className="flex-1 bg-transparent border-b" onChange={handleChange} value={value} placeholder={id} name={name} type={type} autoComplete={"off"} />
-      </div>
-      <span className="text-red-300 text-sm pl-[150px]">{error && "* " + error}</span>
+    <fieldset className={"flex gap-2 flex-col w-full mx-auto"}>
+      <input id={id} className="flex-1 bg-transparent border border-gray-500 p-[5px]" onChange={handleChange} value={value} placeholder={label} name={name} type={type} autoComplete={"off"} />
+      {/* <span className="text-red-300 text-sm pl-[150px]">{error && "* " + error}</span> */}
     </fieldset>
   );
 };
@@ -42,6 +39,7 @@ export default function RegisterForm() {
 
   const [registerForm, setRegisterForm] = React.useState<IRegisterUser>({
     email: "",
+    fullName: "",
     username: "",
     password: "",
     confirmPassword: "",
@@ -71,45 +69,44 @@ export default function RegisterForm() {
     window.location.href = "/";
   };
   return (
-    <form onSubmit={handleSubmit} className={"flex mt-[50px] flex-col gap-10 mx-auto md:w-7/12 lg:w-5/12"}>
+    <form onSubmit={handleSubmit} className={"flex w-full px-2 py-3 md:border border-gray-500 flex-col gap-4"}>
       <div className={"text-center"}>
-        <h1 className="font-bold text-2xl"> Register games4you </h1>
+        <h1 className="font-bold text-2xl"> Social App </h1>
         <p className="italic text-sm">for more beatifull time with your friends</p>
       </div>
       <FormGroup type="email" id="email" label="email" name="email" value={registerForm.email} error={errors.email} handleChange={handleChange} />
+      <FormGroup type="full-name" id="full-name" label="full name" name="fullName" value={registerForm.email} error={errors.email} handleChange={handleChange} />
       <FormGroup type="text" id="username" label="username" name="username" value={registerForm.username} error={errors.username} handleChange={handleChange} />
       <FormGroup type="password" id="password" label="password" name="password" value={registerForm.password} error={errors.password} handleChange={handleChange} />
-      <FormGroup
-        type="password"
-        id="confirm-password"
-        label="confirm password"
-        name="confirmPassword"
-        value={registerForm.confirmPassword}
-        error={errors.confirmPassword}
-        handleChange={handleChange}
-      />
-      <fieldset className={"flex flex-col w-11/12 mx-auto"}>
-        <label className="flex items-center gap-2 text-sm" htmlFor="terms">
-          <input className="cursor-pointer" onChange={handleChange} checked={registerForm.terms} name="terms" type={"checkbox"} />
-          Accept terms of service and privacy policy
-        </label>
-        <span className="text-red-300 text-sm">{errors.terms && "* " + errors.terms}</span>
-      </fieldset>
       {errors.server && (
         <fieldset className="w-11/12 mx-auto ">
           <p className="text-red-500 text-sm text-center">{errors.server && "* " + errors.server}</p>
         </fieldset>
       )}
       <fieldset className={"flex flex-1"}>
-        <button className="px-20 py-2 bg-black text-white mx-auto rounded-xl" type="submit">
+        <button className="px-20 py-[5px] border border-gray-500 text-white mx-auto rounded-[15px]" type="submit">
           Register
         </button>
       </fieldset>
-      <div className={"w-11/12 mx-auto"}>
-        <p className="text-sm">
+      <div className="flex items-center gap-2">
+        <span className="flex-1 border border-gray-600 h-0"></span>
+        <span className="">OR</span>
+        <span className="flex-1 border h-0 border-gray-600"></span>
+      </div>
+      <div>
+        <p className="text-center cursor-pointer">
+          <AiFillFacebook className="inline text-blue-400" />
+          <span className="text-sm ml-2">Log In with Facebook</span>
+        </p>
+        <p className="text-center cursor-pointer">
+          <FcGoogle className="inline" /> <span className="text-sm ml-2">Log In with Google</span>
+        </p>
+      </div>
+      <div className={"border p-2  border-gray-500 flex flex-1"}>
+        <p className="text-sm w-full text-center">
           already have an Account?{" "}
           <b>
-            <Link href="/login">Login</Link>
+            <Link href="/login">Log In</Link>
           </b>
         </p>
       </div>

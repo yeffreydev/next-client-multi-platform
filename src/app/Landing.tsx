@@ -1,36 +1,37 @@
-import { AppItem } from "@/ui/Header";
+import { FaAppStoreIos, FaGooglePlay } from "react-icons/fa";
+import LoginForm from "./login/LoginForm";
+import { IconType } from "react-icons/lib";
+
+export const AppsStoreButton = ({ Icon }: { Icon: IconType; storeName: string }) => {
+  return (
+    <a className="border gap-3 p-2 flex justify-between items-center h-[50px] w-min border-gray-600" href="https://apps.apple.com/us/app/id1439017681" target="_blank" rel="noreferrer">
+      <span>
+        <Icon size={25} />
+      </span>
+      <div className="flex flex-col leading-3">
+        <span className="text-[7px]">GET IT ON</span>
+        <span className="whitespace-nowrap">App Store</span>
+      </div>
+    </a>
+  );
+};
 
 export default function Landing() {
   return (
-    <div className="w-full md:w-9/12  mx-auto mb-3">
-      <h1 className="text-3xl mt-[100px] font-bold text-left my-5">Social Ecosystem for you</h1>
-      <p className="mt-5 text-justify w-11/12 md:w-10/12 lg:w-6/12">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor animi impedit voluptate temporibus! Dignissimos, aliquid quidem? Fugit incidunt doloribus saepe illo, soluta ullam aperiam autem
-        maxime, ad tenetur commodi rem?
-      </p>
-      <div className="flex mt-5 gap-3 flex-wrap">
-        <AppItem name="Paint" path="/apps/paint" />
-        <AppItem name="Paint" path="/apps/paint" />
-        <AppItem name="Paint" path="/apps/paint" />
-      </div>
-      <div className="flex mt-5">
-        <div className="bg-[#343434] rounded-3xl items-center flex justify-end h-[60px] w-[300px]">
-          <button className="bg-[#000] rounded-3xl px-5 h-[50px]">Get Started</button>
+    <div className="lg:w-10/12 xl:w-8/12 md:w-11/12 justify-between flex mx-auto flex-col gap-2 mt-[50px]">
+      <div className="flex w-full gap-2 justify-between">
+        <div className="hidden border lg:flex flex-col p-2 border-gray-600 w-[500px] max-w-[500px]">
+          <div className="flex flex-1"></div>
+          <div className="flex w-full justify-around">
+            <AppsStoreButton storeName="App Store" Icon={FaAppStoreIos} />
+            <AppsStoreButton storeName="Google Play" Icon={FaGooglePlay} />
+          </div>
+        </div>
+        <div className="flex w-11/12 max-w-[400px] mx-auto  lg:mx-0">
+          <LoginForm />
         </div>
       </div>
-      <div className="mt-[100px] ">
-        <h1 className="text-2xl font-bold text-white"> Choose an App and Explore it</h1>
-        <div className="flex ml-5 mt-[50px] flex-col gap-3">
-          <h2 className="text-xl font-semibold">Paint App</h2>
-          <p className="text-justify w-11/12 md:w-10/12 lg:w-6/12">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus quia assumenda id eligendi porro incidunt similique dolor nulla eum fugiat illo, maiores dolorum facilis eveniet totam
-            mollitia reiciendis possimus commodi. mollitia reiciendis possimus commodi. mollitia reiciendis possimus commodi. mollitia reiciendis possimus commodi. mollitia reiciendis possimus
-            reiciendis possimus commodi. mollitia reiciendis possimus commodi. mollitia reiciendis possimus commodi. mollitia reiciendis possimus commodi. mollitia reiciendis possimus commodi.
-            commodi.
-          </p>
-          <button className="bg-gray-400 font-bold text-black w-min px-10 py-3 rounded-xl">Start </button>
-        </div>
-      </div>
+      <div className="hidden lg:flex mx-auto w-full border border-gray-600 min-h-[100px]"></div>
     </div>
   );
 }

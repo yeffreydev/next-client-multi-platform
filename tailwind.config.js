@@ -10,6 +10,11 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    screens: {
+      md: { min: "768px" },
+      lg: { min: "1160px" },
+      xl: { min: "1264px" },
+    },
   },
   plugins: [],
 };

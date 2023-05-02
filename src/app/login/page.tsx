@@ -6,10 +6,8 @@ export const metadata = {
 };
 
 export default function loginPage() {
-  //en el page o el layout ver si existe el user en localsorage, si no existe, entonces redirecionar a /app
-
   return (
-    <div>
+    <div className="flex mx-auto max-w-[400px] relative mt-[50px]">
       <LoginForm />
     </div>
   );
